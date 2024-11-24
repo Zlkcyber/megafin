@@ -21,7 +21,7 @@ async function coday(url, method, headers, payloadData = null) {
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({})); 
-            return { error: true, status: response.status, data: errorData };
+            return { error: true, status: response.status, data: response.statusText };
         }
 
         // Return parsed JSON for successful responses

@@ -19,3 +19,12 @@ export function loadTokens(filePath = 'accounts.json') {
         return null;
     }
 }
+export function getProxiesFromFile() {
+    try {
+        const proxies = fs.readFileSync('proxy.txt', 'utf-8').split('\n').filter(proxy => proxy.trim() !== '');
+        return proxies;
+    } catch (error) {
+        console.error("Error reading proxy.txt:", error.message || error);
+        return [];
+    }
+}

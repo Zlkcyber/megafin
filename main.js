@@ -10,7 +10,7 @@ async function createMultipleWallets(numWallets, apiKey) {
 
         const headersAuth = {
             Accept: '*/*',
-            'x-recaptcha-response': await Kopi.solveCaptchaKey(apiKey),
+            'x-recaptcha-response': await Kopi.solve2Captcha(apiKey),
         };
 
         try {
@@ -46,18 +46,20 @@ async function main(apiKey) {
         try {
             const profile = await Kopi.profileRequest(headers);
             const response = await Kopi.connectRequest(headers);
-            if (!response.error || response !== undefined) {
+            await new Promise(resolve => setTimeout(resolve, 1000 ));
+            
+            if (!response.error || response.result !== undefined) {
                 Kopi.logger(JSON.stringify(response.result), "success");
             } else {
                 Kopi.logger("Failed to connect to wallet.", "error");
             }
             
-            if (profile.error || response.error) {
+            if (response.status === 401 || response.status === 403) {
                 Kopi.logger(`Token for ${tokenEntry.address} is expired. Re-authenticating...`, "error");
 
                 const headersAuth = {
                     Accept: '*/*',
-                    'x-recaptcha-response': await Kopi.solveCaptchaKey(apiKey),
+                    'x-recaptcha-response': await Kopi.solve2Captcha(apiKey),
                 };
                 await Kopi.profileRequest(headers);
                 const walletData = await Kopi.createWalletAndRequest(tokenEntry, headersAuth);
@@ -65,7 +67,9 @@ async function main(apiKey) {
                     tokenEntry.token = walletData.token;
                     Kopi.saveToTokenFile(tokens);
                 }
-            }
+            } else if (response.status === 429){
+                Kopi.logger(response.data, 'error');
+            };
         } catch (error) {
             Kopi.logger(`Error processing token #${index + 1}:`, "error", error);
         }
@@ -104,10 +108,11 @@ async function main(apiKey) {
         } else if (choice === "2") {
             //Load existing tokens
             const apiKey = await rl.question("Enter your API key for captcha solving: ");
-            
-            Kopi.logger('Starting to process wallets in 1 minute....');
-            
-            setInterval(() => main(apiKey), 1000 * 60); // Run every 1 minute
+            while (true) {
+                await main(apiKey);
+                Kopi.logger(`Cooldown 1 minute...`)
+                await new Promise(resolve => setTimeout(resolve, 60000 )); // 1 minute cooldown
+            }
 
         } else {
             // Invalid option
