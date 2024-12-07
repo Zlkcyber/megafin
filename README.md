@@ -3,7 +3,7 @@ Earning by sharing internet bandthwith [https://app.megafin.xyz/dashboard](https
 ![banner](image.png)
 
 ## Features
-
+- **For Now its not support Multy accounts** There have been added rate limited request to server
 - **Register New Wallets**: Create multiple Ethereum wallets and register them on the Megafin platform.
 - **Load Existing Tokens**: Load pre-existing tokens and verify their validity. Automatically re-authenticate expired tokens.
 - **Captcha Solving Integration**: Uses an external API key to solve captchas for wallet registration.
