@@ -110,8 +110,8 @@ async function main(apiKey) {
             const apiKey = await rl.question("Enter your API key for captcha solving: ");
             while (true) {
                 await main(apiKey);
-                Kopi.logger(`Cooldowns 5 minute...`)
-                await new Promise(resolve => setTimeout(resolve, 5 * 60 * 1000 )); // 5 minute cooldowns
+                Kopi.logger(`Cooldowns 1 minute...`)
+                await new Promise(resolve => setTimeout(resolve, 1 * 60 * 1000 )); // 1 minute cooldowns
             }
 
         } else {
