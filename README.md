@@ -13,9 +13,9 @@ Earning by sharing internet bandthwith [https://app.megafin.xyz/dashboard](https
 
 - **Node.js**: Ensure you have Node.js installed. Recommended version: 20+
 - **Dependencies**: Install necessary dependencies with `npm install`.
-- **API Key**: A valid 2Captcha API key to handle captchas.
+- **API Key**: A valid Anti-Captcha API key to solve captchas.
 
-**Get your API Key from [https://2captcha.com/](https://2captcha.com/)**
+**Get your API Key from https://anti-captcha.com/**
 ## Setup
 
 1. Clone this repository:
