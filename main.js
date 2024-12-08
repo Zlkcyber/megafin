@@ -10,7 +10,7 @@ async function createMultipleWallets(numWallets, apiKey) {
 
         const headersAuth = {
             Accept: '*/*',
-            'x-recaptcha-response': await Kopi.solve2Captcha(apiKey),
+            'x-recaptcha-response': await Kopi.solveAntiCaptcha(apiKey),
         };
 
         try {
@@ -59,7 +59,7 @@ async function main(apiKey) {
 
                 const headersAuth = {
                     Accept: '*/*',
-                    'x-recaptcha-response': await Kopi.solve2Captcha(apiKey),
+                    'x-recaptcha-response': await Kopi.solveAntiCaptcha(apiKey),
                 };
                 await Kopi.profileRequest(headers);
                 const walletData = await Kopi.createWalletAndRequest(tokenEntry, headersAuth);
